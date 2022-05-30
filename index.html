@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <!-- Tell IE to use the latest, best version. -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>walkthrough animation generator based on Cesium</title>
+        <style>
+            @import url(/Build/Cesium/Widgets/widgets.css);
+            @import url(/Build/Cesium/Widgets/Animation/lighter.css);
+            @import url(myComponents.css);
+        </style>
+        <script src="/thirdParty/jquery-3.6.0.js"></script>
+        <script src="/thirdParty/knockout-3.5.1.js"></script>
+        <script src="/thirdParty/jscolor.js"></script>
+        <script src="/Build/Cesium/Cesium.js"></script>
+        <script src="http://api.tianditu.gov.cn/cdn/plugins/cesium/cesiumTdt.js" ></script>
+        <script src="/spline.js"></script>
+        <script src="/cameraNode.js"></script>
+        <script src="/pathController.js"></script>
+        <script src="/gltfModelController.js"></script>
+        <script src="/entityController.js"></script>
+        
+    </head>
+    <body class="cesium"></body>
+        <div class="cesium" id="credit"></div>
+        <div class="cesium" id="cesiumContainer"></div>
+        <div class="myComponents" id="pointProperties">
+            关节点参数设置
+            <form>
+              <p>
+                <select id="CType" name="镜头选择" >
+                  <option value=0>推</option>
+                  <option value=1>拉</option>
+                  <option value=2>摇</option>
+                  <option value=3>移</option>
+                  <option value=4>升降</option>
+                </select>
+              </p>
+                
+                距离：<input id="distance" type="number" 
+                    data-bind="value: distance, valueUpdate: 'input'" style="width:120px;" value="0">
+                角度：<input id="angle" type="number" style="width:120px;" min="-180" max="180" value="0"
+                    data-bind="value: angle, valueUpdate: 'input'">
+                速度：<input id="speed" type="number" style="width:120px;" value="25"
+                    data-bind="value: speed, valueUpdate: 'input'">
+                <button id="chooseTarget">选择目标</button>
+                <button id="submit">提交</button>
+              </form>
+          </div>
+          
+          <div class="myComponents" id="inputPanel"> 
+            <div id="fileName"></div>
+            <input type="file" id="files" >
+            
+            <div id="pathFuncs">
+                
+                <button id="edit" >编辑</button>
+                <button id="quitEditing">完成编辑</button>
+            </div>
+            <div id="assistFuncs">
+                <!--<button id="interpolation">插值拟合</button>-->
+                <button id="preview" >预览</button>
+                <button id="addModel">添加模型</button>
+            </div>
+            <div id="videoFuncs">
+                <button id="prepare" >就位</button>
+                <button id="play" >播放</button>
+                <button id="quit">停止</button>
+                
+            </div>
+            <label><input id="isRecording" type="checkbox">开启录制</label>
+        </div>
+        <div class="myComponents" id="modelProperties">
+            模型来源选择
+            <form id="modelType">
+                <p>模型文件<input type="radio" name="mtype" value = 0 checked="true"></p>
+                <p>几何图形<input type="radio" name="mtype" value = 1></p>
+            </form>
+            <div id="seModelEdit">
+                <button id="quitmodeledit">完成编辑</button>
+            </div>
+            <div id="documentModel">
+                <input type="file" id="addDocModel">
+                <div id="gliders">
+                    <div>
+                        <div>Scale</div>
+                        <input type="range" min="-100" max="100.0" step="1" data-bind="value: Scale, valueUpdate: 'input'">
+                        <input type="text" size="5" data-bind="value: Scale">
+                    </div>
+                    <div>
+                        <div>RotateX</div>
+                        <input type="range" min="-90.0" max="90.0" step="1" data-bind="value: RotateX, valueUpdate: 'input'">
+                        <input type="text" size="5" data-bind="value: RotateX">
+                    </div>
+                    <div>
+                        <div>RotateY</div>
+                        <input type="range" min="-90.0" max="90.0" step="1" data-bind="value: RotateY, valueUpdate: 'input'">
+                        <input type="text" size="5" data-bind="value: RotateY">
+                    </div>
+                    <div>
+                        <div>RotateZ</div>
+                        <input type="range" min="-90.0" max="90.0" step="1" data-bind="value: RotateZ, valueUpdate: 'input'">
+                        <input type="text" size="5" data-bind="value: RotateZ">
+                    </div>
+                    <div>
+                        <div>color</div>
+                        <input class="jscolor" id="color" data-bind="value: color, valueUpdate: 'input'">
+                    </div>
+                </div>
+            </div>
+            <div id="primitives">
+                <p>形状选择
+                    <select id="entityType" name="模型选择" >
+                        <option value=0>点</option>
+                        <option value=1>矩形</option>
+                        <option value=2>标签</option>
+                        <option value=3>圆柱</option>
+                        <option value=4>球体</option>
+                        <option value=5>平面</option>
+                        <option value=6>墙</option>
+                        <option value=7>多边形</option>
+                    </select>
+                </p>
+            </div>
+            <div id="propertiesEdtior">
+                
+                <div id="perspectiveProperties">
+                    <div>
+                        <div>
+                            <p>颜色<input class="jscolor" id="mcolor"></p>
+                            <p>轮廓颜色<input class="jscolor" id="outlineColor"></p>
+                            <p>轮廓宽度<input id="outlineWidth"></p>
+                        </div>
+                        
+                        <p>文本<input id="content"></p>
+                        <p>大小<input id="pixelSize"></p>
+                        <p>半径<input id="radius"></p>
+                        <div id="scaleByDistance">
+                            随距离缩放
+                            <p>最近<input id="snear"></p>
+                            <p>最近属性<input id="snearVal"></p>
+                            <p>最远<input id="sfar"></p>
+                            <p>最远属性<input id="sfarVal"></p>
+                        </div>
+                        <div id="translucencyByDistance">
+                            距离透明度
+                            <p>最近<input id="tnear"></p>
+                            <p>最近属性<input id="tnearVal"></p>
+                            <p>最远<input id="tfar"></p>
+                            <p>最远属性<input id="tfarVal"></p>
+                        </div>
+                        <div id="distanceDisplayCondition">
+                            可视距离
+                            <p>最近<input id="dnear"></p>
+                            <p>最远<input id="dfar"></p>
+                        </div>
+                    </div>
+                    <button id="createEntity">选择位置</button>
+                    <button id="editEntity">编辑模型</button>
+                    <button id="quitEntityEdit">完成编辑</button>
+                </div>
+                <div id="positionAdjust">
+                    <div>
+                        <button>-</button>
+                        <input>
+                        <button>+</button>
+                    </div>
+                </div>
+                
+                
+            </div>
+            
+        </div>
+        <div id="eye" ></div>
+        <script src="/initiator.js"></script>
+        <script src="/drawTools.js"></script>
+        <script src="/filereader.js"></script>
+        <script src="/pathEditorend.js"></script>
+        <script src="/docModelEditor.js"></script>
+        <script src="/ceModelEditor.js"></script>
+        
+      </body>
+</html>

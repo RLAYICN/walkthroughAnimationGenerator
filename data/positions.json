@@ -1,0 +1,30 @@
+
+{
+    
+    "positions":[
+        {
+            "latitude": 31.86,
+            "longitude": 117.27
+        },
+        {
+            "latitude": 32.47,
+            "longitude": 117.16
+        },
+        {
+            "latitude": 32.62,
+            "longitude": 116.98
+        },
+        {
+            "latitude": 32.68,
+            "longitude": 116.71
+        },
+        {
+            "latitude": 33.97,
+            "longitude": 116.77
+        },
+        {
+            "latitude": 33.92,
+            "longitude": 116.76
+        }
+    ]
+}

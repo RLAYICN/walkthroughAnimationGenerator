@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>Hello World!</title>
+    <script src="/Build/Cesium/Cesium.js"></script>
+    <style>
+      @import url(/Build/Cesium/Widgets/widgets.css);
+      @import url(/Build/Cesium/Widgets/Animation/lighter.css);
+      @import url(myComponents.css);
+      
+    </style>
+  </head>
+  <body class="cesium">
+    <div class="cesium" id="credit"></div>
+    <div class="cesium" id="cesiumContainer"></div>
+    <div class="myComponents" id="pointProperties">
+      关节点参数设置
+      <form>
+        <p>
+          <select id="cameraType" name="镜头选择" >
+            <option value=0>推</option>
+            <option value=1>拉</option>
+            <option value=2>摇</option>
+            <option value=3>移</option>
+            <option value=4>升降</option>
+          </select>
+        </p>
+          
+          距离：<input id="distance" type="number" style="width:120px;" value="0">
+          角度：<input id="angle" type="number" style="width:120px;" min="-180" max="180" value="0">
+          速度：<input id="speed" type="number" style="width:120px;" value="25">
+          <button id="chooseTarget">选择目标</button>
+          <button id="submit">提交</button>
+        </form>
+    </div>
+    
+    <div class="myComponents" id="inputPanel"> 
+      <div id="fileName"></div>
+      <input type="file" id="files" >
+      <button id="interpolation">插值拟合</button>
+      <div>
+        <button id="preview" css="display:left;">预览</button>
+        <button id="edit" css="display:left;">编辑</button>
+        <button id="quitEditing" css="display:right;">完成编辑</button>
+        <button id="addModel" css="display:right">添加模型</button>
+      </div>
+      <div>
+        <button id="prepare" css="display:left;">就位</button>
+        <button id="play" css="display:left;">播放</button>
+        <button id="quit" css="display:right;">停止</button>
+        <label><input id="isRecording" type="checkbox" css="display:right;">开启录制</label>
+      </div>
+      <div>
+        <button>保存</button>
+        <input type="file" id="projectfile" multiple="multiple">
+      </div>
+    </div>
+    <div class="myComponents" id="modelProperties">
+      
+    </div>
+    <div id="eye" ></div>
+    <script src="mainPage.js"></script>
+  </body>
+</html>

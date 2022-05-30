@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <!-- Tell IE to use the latest, best version. -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>walkthrough animation generator based on Cesium</title>
+        <style>
+            @import url(/Build/Cesium/Widgets/widgets.css);
+            @import url(/Build/Cesium/Widgets/Animation/lighter.css);
+            @import url(myComponents.css);
+        </style>
+        <script src="/thirdParty/knockout-3.5.1.js"></script>
+        <script src="/Build/Cesium/Cesium.js"></script>
+        <script src="http://api.tianditu.gov.cn/cdn/plugins/cesium/cesiumTdt.js" ></script>
+        <script src="/gltfModelController.js"></script>
+    </head>
+    <body class="cesium"></body>
+        <button id="test"></button>
+        <p><button id="modeledit">编辑模型</button><button id="quitmodeledit">完成编辑</button></p>
+        <div ></div>
+        
+
+    
+        <div class="cesium" id="credit"></div>
+        <div class="cesium" id="cesiumContainer"></div>
+        <div class="myComponents" id="modelProperties">
+            <form id="modelType">
+                <p>模型文件<input type="radio" name="mtype" value = 0 checked="true"></p>
+                <p>几何图形<input type="radio" name="mtype" value = 1></p>
+            </form>
+            <div id="documentModel">
+                <input type="file" id="addModel">
+            </div>
+            <div id="primitives">
+                <p>模型选择
+                    <select id="modelType" name="模型选择" >
+                    <option value=0>标签</option>
+                    <option value=1>矩形</option>
+                    <option value=2>标签</option>
+                    <option value=3>多边形</option>
+                    <option value=4>椭圆</option>
+                    <option value=5>平面</option>
+                    <option value=6>墙</option>
+                    <option value=4>路径</option>
+                    </select>
+                </p>
+            </div>
+            <div id="propertiesEdtior">
+                <div id="positionAdjust">
+                    <div>
+                        <button>-</button>
+                        <input>
+                        <button>+</button>
+                    </div>
+                </div>
+                <div id="gliders">
+                    <div>
+                        <div>Scale</div>
+                        <input type="range" min="-100" max="100.0" step="1" data-bind="value: Scale, valueUpdate: 'input'">
+                        <input type="text" size="5" data-bind="value: Scale">
+                    </div>
+                    <div>
+                        <div>RotateX</div>
+                        <input type="range" min="-90.0" max="90.0" step="1" data-bind="value: RotateX, valueUpdate: 'input'">
+                        <input type="text" size="5" data-bind="value: RotateX">
+                    </div>
+                    <div>
+                        <div>RotateY</div>
+                        <input type="range" min="-90.0" max="90.0" step="1" data-bind="value: RotateY, valueUpdate: 'input'">
+                        <input type="text" size="5" data-bind="value: RotateY">
+                    </div>
+                    <div>
+                        <div>RotateZ</div>
+                        <input type="range" min="-90.0" max="90.0" step="1" data-bind="value: RotateZ, valueUpdate: 'input'">
+                        <input type="text" size="5" data-bind="value: RotateZ">
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+        <div id="eye" ></div>
+        <script src="/initiator.js"></script>
+        <script src="/filereader.js"></script>
+        <script src="/modelEditor.js"></script>
+      </body>
+</html>

@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>Spline JS Sample</title>
+<script type="text/javascript" src="spline.js"></script>
+<script type="text/javascript" src="spline-display.js"></script>
+<script type="text/javascript">
+
+var load = function()
+{
+  new SplineDisplay(
+    {
+      "parentContainer":document.getElementById("spline"),
+      "spline":new Spline([[-3,-2],[-2,1],[-1,-1],[1,-1],[1,1],[2,2.5],[4,3]],3),
+      "xlen":10,
+      "ylen":10,
+      "width":500,
+      "height":500,
+    }
+  );
+};
+</script>
+</head>
+<body onload="load()">
+<span id="spline"></span>
+</body>
+</html>

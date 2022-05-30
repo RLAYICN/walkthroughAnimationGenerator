@@ -1,0 +1,2 @@
+2022/04/25 17:27:25 [error] 9096#18804: *1 CreateFile() "F:\GW\nginx/html/favicon.ico" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost", referrer: "http://localhost/"
+2022/04/25 17:29:46 [error] 9096#18804: *4 CreateFile() "F:\GW\nginx/html/layer.json" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /layer.json HTTP/1.1", host: "localhost"
